@@ -13,7 +13,7 @@ See Bicep# [/lib/network](/lib/network.bicep) in action!
 
 ## Status ##
 
-This project is currently in preview and only has the most basic functionality.
+This project is currently in preview and only has the most basic functionality. You can help by expanding it.
 
 ## Compile ##
 
