@@ -1,0 +1,19 @@
+{
+  "apimanagementWesteurope": "ApiManagement.WestEurope",
+  "appserviceWesteurope": "AppService.WestEurope",
+  "azurecloudWesteurope": "AzureCloud.westeurope",
+  "azureconnectorsWesteurope": "AzureConnectors.WestEurope",
+  "azurecontainerregistryWesteurope": "AzureContainerRegistry.WestEurope",
+  "azurecosmosdbWesteurope": "AzureCosmosDB.WestEurope",
+  "azurekeyvaultWesteurope": "AzureKeyVault.WestEurope",
+  "batchnodemanagementWesteurope": "BatchNodeManagement.WestEurope",
+  "datafactoryWesteurope": "DataFactory.WestEurope",
+  "eventhubWesteurope": "EventHub.WestEurope",
+  "hdinsightWesteurope": "HDInsight.WestEurope",
+  "microsoftcontainerregistryWesteurope": "MicrosoftContainerRegistry.WestEurope",
+  "powerplatforminfraWesteurope": "PowerPlatformInfra.WestEurope",
+  "powerplatformplexWesteurope": "PowerPlatformPlex.WestEurope",
+  "servicebusWesteurope": "ServiceBus.WestEurope",
+  "sqlWesteurope": "Sql.WestEurope",
+  "storageWesteurope": "Storage.WestEurope"
+}
