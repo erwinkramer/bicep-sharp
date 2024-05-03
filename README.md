@@ -140,7 +140,11 @@ Public types are;
 
 [/lib/private/](/lib/private/) contains private variables, types and functions, grouped by resource type, to be used by public facing Bicep# files.
 
-[/scripts/New-FrameworkGlobals.ps1](/scripts/New-FrameworkGlobals.ps1) outputs separate text files in [/lib/private/variables/generated/](/lib/private/variables/generated/) for each global value, to preserve efficient loading with `loadTextContent()`. Because we cannot use variables inside functions, these files can directly be used inside any private function.
+#### Global values ####
+
+Preferably, introduce global values and use them directly inside functions instead of introducing a new parameter for a function. Global values make sense if they are common tenant-wide settings.
+
+During [compilation](#compile), [/scripts/New-FrameworkGlobals.ps1](/scripts/New-FrameworkGlobals.ps1) outputs separate text files in [/lib/private/variables/generated/](/lib/private/variables/generated/) for each global value, to preserve efficient loading with `loadTextContent()`. Because we cannot use variables inside functions, these files can directly be used inside any private function.
 
 ## License ##
 
