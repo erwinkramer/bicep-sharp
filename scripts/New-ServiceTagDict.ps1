@@ -15,8 +15,8 @@ param (
 Write-Output "compiling service tags..."
 
 $serviceTags = (Get-AzNetworkServiceTag -Location $location).Values
-$serviceTagsGlobalForBicepSharp = [ordered]@{}
-$serviceTagsRegionalForBicepSharp = [ordered]@{}
+$serviceTagsGlobalForBicepSharp = [System.Collections.SortedList]::new()
+$serviceTagsRegionalForBicepSharp = [System.Collections.SortedList]::new()
 
 foreach ($serviceTag in $serviceTags) {
 

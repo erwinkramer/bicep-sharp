@@ -10,8 +10,8 @@ param (
 Write-Output "compiling roles..."
 
 $roleDefinitions = Get-AzRoleDefinition
-$customRoleDefinitionsForBicepSharp = [ordered]@{}
-$builtInroleDefinitionsForBicepSharp = [ordered]@{}
+$customRoleDefinitionsForBicepSharp = [System.Collections.SortedList]::new()
+$builtInroleDefinitionsForBicepSharp = [System.Collections.SortedList]::new()
 
 foreach ($roleDefinition in $roleDefinitions) {
 

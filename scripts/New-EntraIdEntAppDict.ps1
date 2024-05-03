@@ -10,8 +10,8 @@ param (
 Write-Output "compiling apps..."
 
 $enterpriseApps = Get-AzADServicePrincipal
-$customEnterpriseAppsForBicepSharp = [ordered]@{}
-$builtInEnterpriseAppsForBicepSharp = [ordered]@{}
+$customEnterpriseAppsForBicepSharp = [System.Collections.SortedList]::new()
+$builtInEnterpriseAppsForBicepSharp = [System.Collections.SortedList]::new()
 
 foreach ($enterpriseApp in $enterpriseApps) {
 
