@@ -3,18 +3,13 @@
 [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/erwinkramer/bicep-sharp)
 
-Bicep# (pronounced Bicep sharp) is a functional framework to be used with Azure Bicep. It aims to simplify Bicep even further by providing variables, types and functions for better modularity.
+Bicep# (pronounced Bicep sharp) is a functional framework designed to streamline the use of Azure Bicep. By offering variables, types, and functions, Bicep# aims to simplify infrastructure as code and set the standards for what a good infrastructure as code framework looks like.
 
 ## Benefits of Bicep# ##
 
 Bicep# provides the following advantages:
 
-1. **Tailors to your policies, environment resources and to the latest changes on Azure and makes them available as auto generated variables:**
-
-   - Roles are compiled for your tenant, to get the tenant-specific custom roles and the latest Built-In roles.
-   - Enterprise Apps are compiled for your tenant, to get the tenant-specific custom Enterprise Apps and the latest Microsoft Apps.
-   - Service tags are compiled for your region, to get the relevant and latest regional service tags.
-   - Global settings are compiled for your policies, for instance if resources are allowed to be publicly accessible.
+1. **Customized environment variables:** Bicep# automatically generates variables tailored to your policies, environment resources, and the latest Azure changes. This includes tenant-specific roles, enterprise apps, service tags, and global settings, ensuring up-to-date and easy to use information.
 
 2. **Rethinks the module pattern:** Module oriented libraries like [Azure Verified Modules](https://azure.github.io/Azure-Verified-Modules/) aim to modularize each resource. With Bicep#, the approach is to:
 
@@ -22,15 +17,30 @@ Bicep# provides the following advantages:
    - **Prevent overuse of modules:** Many use cases for Bicep modules are obsolete with the introduction of user-defined concepts in Bicep. Technically, modules are just separate deployment templates (and server side sub-deployments in Azure). There used to be no other way to centralize logic than to use templates and reference them. With Bicep#, there shouldn't be much reason to keep modularizing everything with the concept of Bicep modules. That doesn't mean modules don't have a use case anymore, but it sure isn't as much of a big deal anymore.
    - **Respect the simplicity of Bicep, and only provide functionality that extends your workflow instead of overhauling it:** Giving in on enterprise-scale libraries most likely means overhauling a large part of your infrastructure. When keeping things small and functional oriented, you can effectively refactor either big or small parts of your infrastructure, where it matters to you the most.
 
-3. **Compatible with Azure Container registry (ACR):** All types, function and variables can be used from Bicep# when published to ACR.
+3. **Compatible with Azure Container registry (ACR):** All types, function and variables can seamlessly integrate with ACR.
 
-4. **Scalable framework design:** Bicep# is designed with scalability in mind, providing a straightforward [technical design](#technical-design) to improve the project.
+4. **Scalable framework design:** Bicep# is designed with scalability in mind, providing a straightforward [technical design](#technical-design) to facilitate project development.
 
 ## Demo ##
 
 See Bicep# [/lib/network](/lib/network.bicep) in action!
 
 ![Demo](/demo.gif)
+
+## Samples ##
+
+The samples use local files and not from a registry, but give a good idea how to use Bicep#. Try out [the samples](/samples/) by running the following commands:
+
+```bash
+az login
+az deployment sub create --location westeurope --template-file samples/main.bicep --parameters samples/main.dev.bicepparam 
+```
+
+Or just build the sample locally:
+
+```bash
+az bicep build --file samples/main.bicep
+```
 
 ## Status ##
 
@@ -74,21 +84,6 @@ After deployment, you can use any of the public lib files in your own project by
 
 ```bash
 import * as sharpNetwork from 'br:acrbicepsharp.azurecr.io/bicepsharp/network:v1'
-```
-
-## Samples ##
-
-The samples use local files and not from a registry, but give a good idea how to use Bicep#. Try out [the samples](/samples/) by running the following commands:
-
-```bash
-az login
-az deployment sub create --location westeurope --template-file samples/main.bicep --parameters samples/main.dev.bicepparam 
-```
-
-Or just build the sample locally:
-
-```bash
-az bicep build --file samples/main.bicep
 ```
 
 ## Technical design ##
