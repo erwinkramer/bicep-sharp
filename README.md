@@ -104,13 +104,11 @@ subgraph Bicep# public
 end
 
 subgraph Bicep# private
-    pconst --> pfunc(bicep functions)
-    pgen(generated json variables) --> pfunc
-    ptypes(bicep types)
-    pgen --> pconst
-    pconst(static bicep variables)
+    pgen(json variables - generated) --> pconst
+    ptypes(bicep types) --> pfunc
+    pfunc(bicep functions)
+    pconst(bicep variables - static)
 end
-
 
 pfunc --> publib
 pconst --> publib
@@ -122,6 +120,7 @@ ats --> compiler
 udv --> compiler
 
 compiler --> pgen
+pgen --> pfunc
 ```
 
 ### Casing ###
