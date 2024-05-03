@@ -57,6 +57,7 @@ Connect-AzAccount
 ```
 
 After deployment, you can use any of the public lib files in your own project by referring to the ACR in a Bicep file, for instance like this:
+
 ```bash
 import * as sharpNetwork from 'br:acrbicepsharp.azurecr.io/bicepsharp/network:v1'
 ```
@@ -92,7 +93,9 @@ Module oriented libraries like [Azure Verified Modules](https://azure.github.io/
 
 Bicep filenames are snake-case in order to support imports into Azure Container registry.
 
-Bicep variables, functions, types and all other filenames are lowerCamelCase.  
+PowerShell filenames use [Approved Verbs for PowerShell Commands](https://learn.microsoft.com/en-us/powershell/scripting/developer/cmdlet/approved-verbs-for-windows-powershell-commands) and follow their default casing pattern.
+
+Bicep variables, functions, types and all other filenames are lower camel case, as described in their [Best practices](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/best-practices#names).  
 
 ### Public facing ###
 
