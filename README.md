@@ -5,6 +5,27 @@
 
 Bicep# (pronounced Bicep sharp) is a functional framework to be used with Azure Bicep. It aims to simplify Bicep even further by providing variables, types and functions for better modularity.
 
+## Benefits of Bicep# ##
+
+Bicep# provides the following advantages:
+
+1. **Tailors to your policies, environment resources and to the latest changes on Azure and makes them available as auto generated variables:**
+
+   - Roles are compiled for your tenant, to get the tenant-specific custom roles and the latest Built-In roles.
+   - Enterprise Apps are compiled for your tenant, to get the tenant-specific custom Enterprise Apps and the latest Microsoft Apps.
+   - Service tags are compiled for your region, to get the relevant and latest regional service tags.
+   - Global settings are compiled for your policies, for instance if resources are allowed to be publicly accessible.
+
+2. **Rethinks the module pattern:** Module oriented libraries like [Azure Verified Modules](https://azure.github.io/Azure-Verified-Modules/) aim to modularize each resource. With Bicep#, the approach is to:
+
+   - **Provide a way to mix and match better than modules:** Bicep# provides centralized types, functions and variables you can use over and over again, without being isolated into a single module, where some [types](https://github.com/Azure/bicep-registry-modules/blob/24e4a79e840088f266002631efdc0383ea9e98a0/avm/res/storage/storage-account/main.bicep#L652) and [patterns](https://github.com/Azure/bicep-registry-modules/blob/24e4a79e840088f266002631efdc0383ea9e98a0/avm/res/storage/storage-account/main.bicep#L449) are actually not that reusable at all. For instance, in Bicep#, you make an NSG rule without having to look up what the service tags are, or what the destination service structure looks like, or without restricting in what module your NSG rule ends up in. You decide, and Bicep# gets you the additional information and structure you missed out on.
+   - **Prevent overuse of modules:** Many use cases for Bicep modules are obsolete with the introduction of user-defined concepts in Bicep. Technically, modules are just separate deployment templates (and server side sub-deployments in Azure). There used to be no other way to centralize logic than to use templates and reference them. With Bicep#, there shouldn't be much reason to keep modularizing everything with the concept of Bicep modules. That doesn't mean modules don't have a use case anymore, but it sure isn't as much of a big deal anymore.
+   - **Respect the simplicity of Bicep, and only provide functionality that extends your workflow instead of overhauling it:** Giving in on enterprise-scale libraries most likely means overhauling a large part of your infrastructure. When keeping things small and functional oriented, you can effectively refactor either big or small parts of your infrastructure, where it matters to you the most.
+
+3. **Compatible with Azure Container registry (ACR):** All types, function and variables can be used from Bicep# when published to ACR.
+
+4. **Scalable framework design:** Bicep# is designed with scalability in mind, providing a straightforward [technical design](#technical-design) to improve the project.
+
 ## Demo ##
 
 See Bicep# [/lib/network](/lib/network.bicep) in action!
@@ -16,13 +37,6 @@ See Bicep# [/lib/network](/lib/network.bicep) in action!
 This project is currently in preview and only has the most basic functionality. You can help by expanding it.
 
 ## Compile ##
-
-Bicep# tailors to your policies, environment resources and to the latest changes on Azure:
-
-- Roles are compiled for your tenant, to get the tenant-specific custom roles and the latest Built-In roles.
-- Enterprise Apps are compiled for your tenant, to get the tenant-specific custom Enterprise Apps and the latest Microsoft Apps.
-- Service tags are compiled for your region, to get the relevant and latest regional service tags.
-- Global settings are compiled for your policies, for instance if resources are allowed to be publicly accessible.
 
 Compiled files are outputted to [/lib/private/variables/generated/](/lib/private/variables/generated/).
 
@@ -38,7 +52,7 @@ Connect-AzAccount
 
 ## Deploy ##
 
-Ideally, deploy the [/lib/](/lib/) files to an [Azure Container Registry](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-intro) for improved reusability in your project or organization. All types, function and variables can be used.
+Ideally, deploy the [/lib/](/lib/) files to an [Azure Container Registry](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-intro) for improved reusability in your project or organization.
 
 To deploy, make sure to:
 
@@ -76,16 +90,6 @@ Or just build the sample locally:
 ```bash
 az bicep build --file samples/main.bicep
 ```
-
-## Functional oriented vs. module oriented approach ##
-
-Module oriented libraries like [Azure Verified Modules](https://azure.github.io/Azure-Verified-Modules/) aim to modularize each resource. With Bicep#, the approach is to:
-
-1. **Provide a way to mix and match better than modules.** Bicep# provides centralized types, functions and variables you can use over and over again, without being isolated into a single module, where some [types](https://github.com/Azure/bicep-registry-modules/blob/24e4a79e840088f266002631efdc0383ea9e98a0/avm/res/storage/storage-account/main.bicep#L652) and [patterns](https://github.com/Azure/bicep-registry-modules/blob/24e4a79e840088f266002631efdc0383ea9e98a0/avm/res/storage/storage-account/main.bicep#L449) are actually not that reusable at all. For instance, in Bicep#, you make an NSG rule without having to look up what the service tags are, or what the destination service structure looks like, or without restricting in what module your NSG rule ends up in. You decide, and Bicep# gets you the additional information and structure you missed out on.
-
-2. **Prevent overuse of modules.** Many use cases for Bicep modules are obsolete with the introduction of user-defined concepts in Bicep. Technically, modules are just separate deployment templates (and server side sub-deployments in Azure). There used to be no other way to centralize logic than to use templates and reference them. With Bicep#, there shouldn't be much reason to keep modularizing everything with the concept of Bicep modules. That doesn't mean modules don't have a use case anymore, but it sure isn't as much of a big deal anymore.
-
-3. **Respect the simplicity of Bicep, and only provide functionality that extends your workflow instead of overhauling it.** Giving in on enterprise-scale libraries most likely means overhauling a large part of your infrastructure. When keeping things small and functional oriented, you can effectively refactor either big or small parts of your infrastructure, where it matters to you the most.
 
 ## Technical design ##
 
