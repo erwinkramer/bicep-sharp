@@ -1,6 +1,6 @@
 import * as sharpTag from '../lib/tag.bicep'
-import * as sharpEntraId from '../lib/entraId.bicep'
-import * as sharpDevOpsServices from '../lib/devOpsServices.bicep'
+import * as sharpEntraId from '../lib/entra-id.bicep'
+import * as sharpDevOpsServices from '../lib/devops-services.bicep'
 
 using 'main.bicep'
 

@@ -1,4 +1,4 @@
-import * as _devOpsServices from 'private/variables/devOpsServices.bicep'
+import * as _devOpsServices from 'private/variables/devops-services.bicep'
 
 /* ----------------------------------------
 

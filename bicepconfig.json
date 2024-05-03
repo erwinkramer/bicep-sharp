@@ -12,6 +12,7 @@
     }
   },
   "experimentalFeaturesEnabled": {
+    "publishSource": true,
     "extensibility": true,
     "compileTimeImports": true,
     "userDefinedFunctions": true,

@@ -31,14 +31,39 @@ To compile, make sure to install [PowerShell Az](https://www.powershellgallery.c
 - param `location`, a location (a valid Azure region), for instance `westeurope`;
 - param `allowPublicResources`, either `0` or `1`. Sets the public network access property on resources.
 
-```bash
+```powershell
 Connect-AzAccount
 ./scripts/Build-Lib.ps1 -location westeurope -allowPublicResources 0
 ```
 
+## Deploy ##
+
+Ideally, deploy the [/lib/](/lib/) files to an [Azure Container Registry](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-intro) for improved reusability in your project or organization. All types, function and variables can be used.
+
+To deploy, make sure to:
+
+- [compile](#compile) Bicep#;
+- provision an Azure Container Registry into your tenant;
+- add Bicep to your PATH by [installing manually](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#install-manually).
+
+Then run with:
+
+- param `acrLoginServer`, the login server of an Azure Container Registry, for instance `acrbicepsharp.azurecr.io`;
+- param `versionPostfix`, sets the version of the files to publish, if the version already exists, it will overwrite.
+
+```powershell
+Connect-AzAccount
+./scripts/Publish-Lib.ps1 -acrLoginServer "acrbicepsharp.azurecr.io" -versionPostfix 1
+```
+
+After deployment, you can use any of the public lib files in your own project by referring to the ACR in a Bicep file, for instance like this:
+```bash
+import * as sharpNetwork from 'br:acrbicepsharp.azurecr.io/bicepsharp/network:v1'
+```
+
 ## Samples ##
 
-Try out [the samples](/samples/) by running the following commands:
+The samples use local files and not from a registry, but give a good idea how to use Bicep#. Try out [the samples](/samples/) by running the following commands:
 
 ```bash
 az login
@@ -63,6 +88,12 @@ Module oriented libraries like [Azure Verified Modules](https://azure.github.io/
 
 ## Technical design ##
 
+### Casing ###
+
+Bicep filenames are snake-case in order to support imports into Azure Container registry.
+
+Bicep variables, functions, types and all other filenames are lowerCamelCase.  
+
 ### Public facing ###
 
 The root of [/lib/](/lib/) contains public variables, types and functions to be used by the end-user, smartly grouped together, to;
@@ -82,8 +113,8 @@ Lib files should only have a use case within two scopes at most, and ideally jus
 | authorization | [Azure Role Based Access Control](https://learn.microsoft.com/en-us/azure/role-based-access-control/overview) | resourceGroup  |
 | network | [Azure Networking](https://azure.microsoft.com/en-us/products/category/networking) | resourceGroup |
 | storage | Azure Storage | resourceGroup |
-| devOpsServices | DevOps Services | bicepparam |
-| entraId | Entra ID | bicepparam  |
+| devops-services | DevOps Services | bicepparam |
+| entra-id | Entra ID | bicepparam  |
 
 ### Breakdown of artifacts in lib files ###
 

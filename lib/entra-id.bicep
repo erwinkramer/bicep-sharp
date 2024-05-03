@@ -1,5 +1,5 @@
-import * as _entraIdVar from 'private/variables/entraId.bicep'
-import * as _entraIdType from 'private/types/entraId.bicep'
+import * as _entraIdVar from 'private/variables/entra-id.bicep'
+import * as _entraIdType from 'private/types/entra-id.bicep'
 
 /* ----------------------------------------
 

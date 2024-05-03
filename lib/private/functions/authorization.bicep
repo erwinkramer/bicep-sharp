@@ -1,5 +1,5 @@
 import * as _authType from '../types/authorization.bicep'
-import * as _entraIdType from '../types/entraId.bicep'
+import * as _entraIdType from '../types/entra-id.bicep'
 
 @description('''
 Get the complete role resource id based of a role id
