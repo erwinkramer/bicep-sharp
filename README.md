@@ -89,7 +89,7 @@ import * as sharpNetwork from 'br:acrbicepsharp.azurecr.io/bicepsharp/network:v1
 ## Technical design ##
 
 ```mermaid
-flowchart LR
+flowchart TB
 
 ats[Azure tenant - source]
 udv[User defined settings]
