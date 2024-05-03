@@ -88,6 +88,42 @@ import * as sharpNetwork from 'br:acrbicepsharp.azurecr.io/bicepsharp/network:v1
 
 ## Technical design ##
 
+```mermaid
+flowchart LR
+
+ats[Azure tenant - source]
+udv[User defined settings]
+compiler[Bicep# compiler]
+
+subgraph atd[Azure tenant - destination]
+    acr(Azure Container registry)
+end
+
+subgraph Bicep# public
+    publib(library files)
+end
+
+subgraph Bicep# private
+    pconst --> pfunc(functions)
+    pgen(generated variables) --> pfunc
+    ptypes(types)
+    pgen --> pconst
+    pconst(static variables)
+end
+
+
+pfunc --> publib
+pconst --> publib
+ptypes --> publib
+
+publib -- publish --> acr
+
+ats --> compiler
+udv --> compiler
+
+compiler --> pgen
+```
+
 ### Casing ###
 
 Bicep filenames are snake-case in order to support imports into Azure Container registry.
