@@ -1,8 +1,8 @@
 import * as _resourceType from '../types/resource.bicep'
 
 @description('''
-Add iteration identifier element to the properties of each resource, based on the index of a resource in the unIterizedResourceCollection.
-If the iteration identifier element already exists, it skip setting the element to that object.
+Adds an iteration identifier element to the properties of each resource, based on the index of a resource in the unIterizedResourceCollection.
+If the iteration identifier element already exists, it skips setting the element for that object in the collection.
 ''')
 @export()
 func makeIteratedResourceCollection(
