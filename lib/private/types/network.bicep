@@ -8,6 +8,19 @@ type nsgProperties = resource<'Microsoft.Network/networkSecurityGroups@2023-09-0
 type nsgRuleProperties = nsgProperties.securityRules[*].properties
 
 @export()
+type nsgRulePropertiesOptionalPriority = {
+  description: nsgRuleProperties.description
+  protocol: nsgRuleProperties.protocol
+  sourcePortRange: nsgRuleProperties.sourcePortRange
+  destinationPortRange: nsgRuleProperties.destinationPortRange
+  sourceAddressPrefix: nsgRuleProperties.sourceAddressPrefix
+  destinationAddressPrefix: nsgRuleProperties.destinationAddressPrefix
+  priority: nsgRuleProperties.priority?
+  access: nsgRuleProperties.access
+  direction: nsgRuleProperties.direction
+}
+
+@export()
 type buildNsgRuleServiceTagFirewallnsgRuleProperties = nsgProperties.securityRules[*].properties
 
 @export()

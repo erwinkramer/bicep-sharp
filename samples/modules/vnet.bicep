@@ -23,7 +23,6 @@ var sharpVnet = sharpNetwork.buildVnet(vnetPostFix, vnetAddressPrefix, false, nu
 var sharpNsgRules = [
   sharpNetwork.buildNsgRuleIpToIp(
     sharpNetwork.nsgRuleDirections.inbound,
-    100,
     sharpNetwork.nsgRuleAccesses.allow,
     '10.10.10.10',
     '10.10.10.11',
@@ -31,7 +30,6 @@ var sharpNsgRules = [
   )
   sharpNetwork.buildNsgRuleServiceTagToServiceTag(
     sharpNetwork.nsgRuleDirections.inbound,
-    101,
     sharpNetwork.nsgRuleAccesses.allow,
     sharpNetwork.nsgRuleServiceTagsInbound.virtualNetwork,
     sharpNetwork.nsgRuleServiceTagsInbound.azureDataFactory,
@@ -39,7 +37,6 @@ var sharpNsgRules = [
   )
   sharpNetwork.buildNsgRuleFirewallServiceTagToServiceTag(
     sharpNetwork.nsgRuleDirections.inbound,
-    102,
     sharpNetwork.nsgRuleAccesses.deny,
     sharpNetwork.nsgRuleServiceTagsInbound.azureChaosStudio,
     sharpNetwork.nsgRuleServiceTagsInbound.azureAISearch,
@@ -47,7 +44,6 @@ var sharpNsgRules = [
   )
   sharpNetwork.buildNsgRuleFirewallServiceTagToServiceTag(
     sharpNetwork.nsgRuleDirections.outbound,
-    101,
     sharpNetwork.nsgRuleAccesses.deny,
     sharpNetwork.nsgRuleServiceTagsOutbound.azureDatabricks,
     sharpNetwork.nsgRuleServiceTagsOutbound.azureAppService,
@@ -55,7 +51,6 @@ var sharpNsgRules = [
   )
   sharpNetwork.buildNsgRuleFirewallServiceTagToServiceTag(
     sharpNetwork.nsgRuleDirections.outbound,
-    102,
     sharpNetwork.nsgRuleAccesses.deny,
     sharpNetwork.nsgRuleServiceTagsOutbound.azureAttestation,
     sharpNetwork.nsgRuleServiceTagsOutbound.azureFrontDoorBackend,
@@ -63,14 +58,14 @@ var sharpNsgRules = [
   )
   sharpNetwork.buildNsgRuleFirewallServiceTagToServiceTag(
     sharpNetwork.nsgRuleDirections.outbound,
-    103,
     sharpNetwork.nsgRuleAccesses.deny,
     sharpNetwork.nsgRuleServiceTagsOutbound.azureArcInfrastructure,
     sharpNetwork.nsgRuleServiceTagsOutbound.azureCosmosDB,
     sharpNetwork.nsgRuleDestinationServices.elasticSearch
   )
 ]
-var sharpNsg = sharpNetwork.buildNsg(subnetPostfix, sharpNsgRules)
+
+var sharpNsg = sharpNetwork.buildNsg(subnetPostfix, sharpNetwork.createNsgRuleCollectionWithPriority(sharpNsgRules))
 
 resource nsg 'Microsoft.Network/networkSecurityGroups@2023-09-01' = {
   name: sharpNsg.name

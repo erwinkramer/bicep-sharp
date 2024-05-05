@@ -74,11 +74,10 @@ Build NSG rule properties
 func buildNsgRuleProperties(
   direction _networkType.nsgRuleDirection,
   access _networkType.nsgRuleAccess,
-  priority _networkType.nsgRuleProperties.priority,
   sourceAddressPrefix string,
   destinationAddressPrefix string,
   destinationService _networkType.nsgRuleDestinationService
-) _networkType.nsgRuleProperties => {
+) _networkType.nsgRulePropertiesOptionalPriority => {
   description: '${access} ${direction} traffic from ${sourceAddressPrefix} to ${destinationAddressPrefix} for port ${destinationService.portRange} on protocol ${destinationService.protocol}.'
   protocol: destinationService.protocol
   sourcePortRange: '*'
@@ -86,6 +85,5 @@ func buildNsgRuleProperties(
   sourceAddressPrefix: sourceAddressPrefix
   destinationAddressPrefix: destinationAddressPrefix
   access: access
-  priority: priority
   direction: direction
 }

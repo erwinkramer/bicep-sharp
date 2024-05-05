@@ -2,6 +2,7 @@ import * as _networkType from 'private/types/network.bicep'
 import * as _networkVar from 'private/variables/network.bicep'
 import * as _networkFunction from 'private/functions/network.bicep'
 import * as _resourceType from 'private/types/resource.bicep'
+import * as _resourceFunction from 'private/functions/resource.bicep'
 import * as _locationType from 'private/types/location.bicep'
 
 /* ----------------------------------------
@@ -72,7 +73,7 @@ type nsgName = _networkType.nsgName
 type nsgProperties = _networkType.nsgProperties
 
 @export()
-type nsgRuleProperties = _networkType.nsgRuleProperties
+type nsgRulePropertiesOptionalPriority = _networkType.nsgRulePropertiesOptionalPriority
 
 @export()
 type buildNsgRuleServiceTagFirewallnsgRuleProperties = _networkType.buildNsgRuleServiceTagFirewallnsgRuleProperties
@@ -167,12 +168,7 @@ Build a private endpoint.
 @export()
 func buildPrivateEndpoint(targetResourceName string, targetResourceId string, groupId string, subnetId string) _resourceType.resourceFormat => {
   name: 'pe-${targetResourceName}-${groupId}'
-  properties: _networkFunction.buildPrivateEndpointProperties(
-    targetResourceName,
-    targetResourceId,
-    groupId,
-    subnetId
-  )
+  properties: _networkFunction.buildPrivateEndpointProperties(targetResourceName, targetResourceId, groupId, subnetId)
 }
 
 @description('''
@@ -190,7 +186,6 @@ Build an NSG rule from IP to IP.
 @export()
 func buildNsgRuleIpToIp(
   direction nsgRuleDirection,
-  priority nsgRuleProperties.priority,
   access nsgRuleAccess,
   sourceAddressPrefix string,
   destinationAddressPrefix string,
@@ -200,7 +195,6 @@ func buildNsgRuleIpToIp(
   properties: _networkFunction.buildNsgRuleProperties(
     direction,
     access,
-    priority,
     sourceAddressPrefix,
     destinationAddressPrefix,
     destinationService
@@ -213,7 +207,6 @@ Build an NSG rule with service tags that are supported on Azure Firewall.
 @export()
 func buildNsgRuleFirewallServiceTagToServiceTag(
   direction nsgRuleDirection,
-  priority nsgRuleProperties.priority,
   access nsgRuleAccess,
   sourceServiceTag serviceTagFirewallUse,
   destinationServiceTag serviceTagFirewallUse,
@@ -223,7 +216,6 @@ func buildNsgRuleFirewallServiceTagToServiceTag(
   properties: _networkFunction.buildNsgRuleProperties(
     direction,
     access,
-    priority,
     sourceServiceTag,
     destinationServiceTag,
     destinationService
@@ -236,7 +228,6 @@ Build an NSG rule with service tags.
 @export()
 func buildNsgRuleServiceTagToServiceTag(
   direction nsgRuleDirection,
-  priority nsgRuleProperties.priority,
   access nsgRuleAccess,
   sourceServiceTag serviceTagFirewallAndNonFirewallUse,
   destinationServiceTag serviceTagFirewallAndNonFirewallUse,
@@ -246,9 +237,17 @@ func buildNsgRuleServiceTagToServiceTag(
   properties: _networkFunction.buildNsgRuleProperties(
     direction,
     access,
-    priority,
     sourceServiceTag,
     destinationServiceTag,
     destinationService
   )
 }
+
+@description('''
+Create an NSG rule collection and add the 'priority' element based on the order of the nsgRuleResourceCollectionUnPrioritized. Starts at 100.
+''')
+@export()
+func createNsgRuleCollectionWithPriority(
+  nsgRuleResourceCollectionUnPrioritized _networkType.nsgProperties.securityRules
+) _networkType.nsgProperties.securityRules =>
+  _resourceFunction.makeIteratedResourceCollection(nsgRuleResourceCollectionUnPrioritized, 'priority', 100)
