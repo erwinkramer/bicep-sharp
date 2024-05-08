@@ -36,7 +36,9 @@ param groupIds array = [
 ]
 
 param privateEndpointConnectionApprovalNames array = [
-  sharpNetwork.privateEndpointConnectionNames.synGuanchen_MpeMountainArchive
+  sharpNetwork.privateEndpointConnectionNames.synGuanchen_MpeMountainArchive001
+  sharpNetwork.privateEndpointConnectionNames.synGuanchen_MpeMountainArchive002
+  sharpNetwork.privateEndpointConnectionNames.synGuanchen_MpeMountainArchive003
 ]
 
 @description('Id of the subnet to attach the private endpoints to')
@@ -46,7 +48,7 @@ var sharpPrivateEndpoints = [
   for groupId in groupIds: sharpNetwork.buildPrivateEndpoint(sa.name, sa.id, groupId, subnetId)
 ]
 var sharpPrivateEndpointConnectionApprovals = [
-  for privateEndpointConnectionApprovalName in privateEndpointConnectionApprovalNames: sharpNetwork.buildBuildPrivateEndpointConnectionApproval(
+  for privateEndpointConnectionApprovalName in privateEndpointConnectionApprovalNames: sharpNetwork.buildPrivateEndpointConnectionApproval(
     privateEndpointConnectionApprovalName,
     'For yellowTeam@guanchen.nl'
   )
@@ -115,7 +117,10 @@ resource privateEndpoints 'Microsoft.Network/privateEndpoints@2023-09-01' = [
 ]
 
 resource privateEndpointConnectionApprovals 'Microsoft.Storage/storageAccounts/privateEndpointConnections@2023-04-01' = [
-  for sharpPrivateEndpointConnectionApproval in sharpPrivateEndpointConnectionApprovals: {
+  for sharpPrivateEndpointConnectionApproval in sharpPrivateEndpointConnectionApprovals: if (contains(
+    sharpNetwork.privateEndpointConnectionNamesPendingLookup,
+    sharpPrivateEndpointConnectionApproval.name
+  )) {
     parent: sa
     name: sharpPrivateEndpointConnectionApproval.name
     properties: sharpPrivateEndpointConnectionApproval.properties

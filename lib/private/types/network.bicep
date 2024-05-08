@@ -36,7 +36,13 @@ type subnet = resource<'Microsoft.Network/virtualNetworks@2023-09-01'>.propertie
 type vnetProperties = resource<'Microsoft.Network/virtualNetworks@2023-09-01'>.properties
 
 @export()
-type privateEndpointConnectionProperties = resource<'Microsoft.Network/applicationGateways/privateEndpointConnections@2023-09-01'>.properties
+type privateEndpointConnectionApprovalProperties = {
+  privateLinkServiceConnectionState: {
+    status: string
+    description: string
+    actionRequired: string
+  }
+}
 
 @export()
 type serviceTagRegional =

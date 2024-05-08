@@ -142,75 +142,69 @@ var nsgRuleServiceTagsInboundAndOutbound = {
 var nsgRuleServiceTagsRegional = loadJsonContent('./generated/serviceTagsRegional.json')
 
 @export()
-var nsgRuleServiceTagsInbound = union(
-  nsgRuleServiceTagsInboundAndOutbound,
-  {
-    dataConnectorsForMicrosoftScurityProducts: 'Scuba'
-    azureVPNGatewayAndApplicationGateway: 'GatewayManager'
-    actionGroup: 'ActionGroup'
-    apiManagement: 'ApiManagement'
-    applicationInsightsAvailability: 'ApplicationInsightsAvailability'
-    azureAISearch: 'AzureCognitiveSearch'
-    azureDataExplorerManagement: 'AzureDataExplorerManagement'
-    azureDevOps: 'AzureDevOps'
-    azureDigitalTwins: 'AzureDigitalTwins'
-    azureLoadTestingInstanceManagement: 'AzureLoadTestingInstanceManagement'
-    azureMachineLearningInference: 'AzureMachineLearningInference'
-    microsoftSentinel: 'AzureSentinel'
-    azureTrafficManager: 'AzureTrafficManager'
-    azureHDInsight: 'HDInsight'
-    logicAppsManagement: 'LogicAppsManagement'
-    office365ManagementActivityAPIWebhook: 'M365ManagementActivityApiWebhook'
-    powerPlatformextensionExecution: 'PowerPlatformPlex'
-    serialConsoleService: 'SerialConsole'
-  }
-)
+var nsgRuleServiceTagsInbound = union(nsgRuleServiceTagsInboundAndOutbound, {
+  dataConnectorsForMicrosoftScurityProducts: 'Scuba'
+  azureVPNGatewayAndApplicationGateway: 'GatewayManager'
+  actionGroup: 'ActionGroup'
+  apiManagement: 'ApiManagement'
+  applicationInsightsAvailability: 'ApplicationInsightsAvailability'
+  azureAISearch: 'AzureCognitiveSearch'
+  azureDataExplorerManagement: 'AzureDataExplorerManagement'
+  azureDevOps: 'AzureDevOps'
+  azureDigitalTwins: 'AzureDigitalTwins'
+  azureLoadTestingInstanceManagement: 'AzureLoadTestingInstanceManagement'
+  azureMachineLearningInference: 'AzureMachineLearningInference'
+  microsoftSentinel: 'AzureSentinel'
+  azureTrafficManager: 'AzureTrafficManager'
+  azureHDInsight: 'HDInsight'
+  logicAppsManagement: 'LogicAppsManagement'
+  office365ManagementActivityAPIWebhook: 'M365ManagementActivityApiWebhook'
+  powerPlatformextensionExecution: 'PowerPlatformPlex'
+  serialConsoleService: 'SerialConsole'
+})
 
 @export()
-var nsgRuleServiceTagsOutbound = union(
-  nsgRuleServiceTagsInboundAndOutbound,
-  {
-    appConfiguration: 'AppConfiguration'
-    azureAppService: 'AppService'
-    microsoftEntraID: 'AzureActiveDirectory'
-    azureAdvancedThreatProtection: 'AzureAdvancedThreatProtection'
-    azureArcInfrastructure: 'AzureArcInfrastructure'
-    azureAttestation: 'AzureAttestation'
-    azureBackup: 'AzureBackup'
-    azureContainerRegistry: 'AzureContainerRegistry'
-    azureCosmosDB: 'AzureCosmosDB'
-    azureDataLakeStorageGen1: 'AzureDataLake'
-    azureDevSpaces: 'AzureDevSpaces'
-    azureInformationProtection: 'AzureInformationProtection'
-    azureIoTHub: 'AzureIoTHub'
-    azureKeyVault: 'AzureKeyVault'
-    azureManagedGrafana: 'AzureManagedGrafana'
-    azureMonitor: 'AzureMonitor'
-    azureOpenDatasets: 'AzureOpenDatasets'
-    azureResourceManager: 'AzureResourceManager'
-    azureSignalR: 'AzureSignalR'
-    azureSiteRecovery: 'AzureSiteRecovery'
-    azureSpringApps: 'AzureSpringCloud'
-    azureStackBridgeServices: 'AzureStack'
-    azureUpdateDelivery: 'AzureUpdateDelivery'
-    azureDataFactoryManagement: 'DataFactoryManagement'
-    azureEventHubs: 'EventHub'
-    azureAutomationAndGuestConfiguration: 'GuestAndHybridManagement'
-    office365ManagementActivityAPI: 'M365ManagementActivityApi'
-    azureMicrosoftFluidRelayServer: 'MicrosoftAzureFluidRelay'
-    microsoftDefenderForCloudApps: 'MicrosoftCloudAppSecurity'
-    microsoftContainerRegistry: 'MicrosoftContainerRegistry'
-    azureServiceBus: 'ServiceBus'
-    azureSql: 'Sql'
-    azureStorage: 'Storage'
-    storageMover: 'StorageMover'
-    windowsAdminCenter: 'WindowsAdminCenter'
-    azurePlatformDNS: 'AzurePlatformDNS'
-    azurePlatformAzureInstanceMetadataServiceIMDS: 'AzurePlatformIMDS'
-    azurePlatformlicensingOrKeyManagementServiceLKM: 'AzurePlatformLKM'
-    microsoftPurviewPolicyDistribution: 'MicrosoftPurviewPolicyDistribution'
-  }
-)
+var nsgRuleServiceTagsOutbound = union(nsgRuleServiceTagsInboundAndOutbound, {
+  appConfiguration: 'AppConfiguration'
+  azureAppService: 'AppService'
+  microsoftEntraID: 'AzureActiveDirectory'
+  azureAdvancedThreatProtection: 'AzureAdvancedThreatProtection'
+  azureArcInfrastructure: 'AzureArcInfrastructure'
+  azureAttestation: 'AzureAttestation'
+  azureBackup: 'AzureBackup'
+  azureContainerRegistry: 'AzureContainerRegistry'
+  azureCosmosDB: 'AzureCosmosDB'
+  azureDataLakeStorageGen1: 'AzureDataLake'
+  azureDevSpaces: 'AzureDevSpaces'
+  azureInformationProtection: 'AzureInformationProtection'
+  azureIoTHub: 'AzureIoTHub'
+  azureKeyVault: 'AzureKeyVault'
+  azureManagedGrafana: 'AzureManagedGrafana'
+  azureMonitor: 'AzureMonitor'
+  azureOpenDatasets: 'AzureOpenDatasets'
+  azureResourceManager: 'AzureResourceManager'
+  azureSignalR: 'AzureSignalR'
+  azureSiteRecovery: 'AzureSiteRecovery'
+  azureSpringApps: 'AzureSpringCloud'
+  azureStackBridgeServices: 'AzureStack'
+  azureUpdateDelivery: 'AzureUpdateDelivery'
+  azureDataFactoryManagement: 'DataFactoryManagement'
+  azureEventHubs: 'EventHub'
+  azureAutomationAndGuestConfiguration: 'GuestAndHybridManagement'
+  office365ManagementActivityAPI: 'M365ManagementActivityApi'
+  azureMicrosoftFluidRelayServer: 'MicrosoftAzureFluidRelay'
+  microsoftDefenderForCloudApps: 'MicrosoftCloudAppSecurity'
+  microsoftContainerRegistry: 'MicrosoftContainerRegistry'
+  azureServiceBus: 'ServiceBus'
+  azureSql: 'Sql'
+  azureStorage: 'Storage'
+  storageMover: 'StorageMover'
+  windowsAdminCenter: 'WindowsAdminCenter'
+  azurePlatformDNS: 'AzurePlatformDNS'
+  azurePlatformAzureInstanceMetadataServiceIMDS: 'AzurePlatformIMDS'
+  azurePlatformlicensingOrKeyManagementServiceLKM: 'AzurePlatformLKM'
+  microsoftPurviewPolicyDistribution: 'MicrosoftPurviewPolicyDistribution'
+})
 
 @export()
 var nsgRuleDestinationServices = {
@@ -251,9 +245,15 @@ var nsgRuleDestinationServices = {
   dynamicPorts: { portRange: '49152-65535', protocol: 'TCP' }
 }
 
-var privateEndpointConnectionNamesAutoApproved = loadJsonContent('./generated/peConnectionsAutoAppr.json')
+var privateEndpointConnectionNamesApproved = loadJsonContent('./generated/peConApproved.json')
 
-var privateEndpointConnectionNamesManual = loadJsonContent('./generated/peConnectionsManual.json')
+var privateEndpointConnectionNamesPending = loadJsonContent('./generated/peConPending.json')
 
 @export()
-var privateEndpointConnectionNames = union(privateEndpointConnectionNamesAutoApproved, privateEndpointConnectionNamesManual)
+var privateEndpointConnectionNames = union(
+  privateEndpointConnectionNamesApproved,
+  privateEndpointConnectionNamesPending
+)
+
+@export()
+var privateEndpointConnectionNamesPendingLookup = loadJsonContent('./generated/peConPendingLookup.json')

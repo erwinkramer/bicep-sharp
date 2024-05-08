@@ -90,13 +90,12 @@ func buildNsgRuleProperties(
 
 @description('''
 Build Private Endpoint Connection Approval properties
-
-Because the approval properties are the same for each resource, we can just pick one resource and get the privateEndpointConnectionProperties for that.
 ''')
 @export()
-func buildBuildPrivateEndpointConnectionApprovalProperties(connectionName string, additionalInfo string) _networkType.privateEndpointConnectionProperties => {
+func buildPrivateEndpointConnectionApprovalProperties(connectionName string, additionalInfo string) _networkType.privateEndpointConnectionApprovalProperties => {
   privateLinkServiceConnectionState: {
     status: 'Approved'
     description: 'Approved by pipeline. For Resource ${split(connectionName, '.')[0]}. Additional info: ${additionalInfo}.'
+    actionRequired: 'None'
   }
 }

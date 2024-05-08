@@ -68,6 +68,13 @@ Private Endpoint connection names from own and other tenants with either manual 
 @export()
 var privateEndpointConnectionNames = _networkVar.privateEndpointConnectionNames
 
+@description('''
+Lookup array to check if the connection is still pending. 
+Some private endpoint connections do not like to be approved twice. This depends on the parent resource type.
+''')
+@export()
+var privateEndpointConnectionNamesPendingLookup = _networkVar.privateEndpointConnectionNamesPendingLookup
+
 /* ----------------------------------------
 
       😎 Bicep# - Public types 😎
@@ -183,9 +190,9 @@ func buildPrivateEndpoint(targetResourceName string, targetResourceId string, gr
 Build a private endpoint connection approval.
 ''')
 @export()
-func buildBuildPrivateEndpointConnectionApproval(connectionName string, additionalInfo string) _resourceType.resourceFormat => {
+func buildPrivateEndpointConnectionApproval(connectionName string, additionalInfo string) _resourceType.resourceFormat => {
   name: connectionName
-  properties: _networkFunction.buildBuildPrivateEndpointConnectionApprovalProperties(connectionName, additionalInfo)
+  properties: _networkFunction.buildPrivateEndpointConnectionApprovalProperties(connectionName, additionalInfo)
 }
 
 @description('''

@@ -13,17 +13,18 @@ resources
 | where array_length(properties.privateEndpointConnections) > 0
 | mv-expand properties.privateEndpointConnections
 | extend id2 = properties_privateEndpointConnections.id
-| mv-expand properties_privateEndpointConnections.properties.privateLinkServiceConnectionState.description
+| mv-expand properties_privateEndpointConnections.properties.privateLinkServiceConnectionState.status
 | mv-expand properties_privateEndpointConnections.properties.privateEndpoint.id
-| extend state = properties_privateEndpointConnections_properties_privateLinkServiceConnectionState_description
+| extend state = properties_privateEndpointConnections_properties_privateLinkServiceConnectionState_status
 | extend peName = split(properties_privateEndpointConnections_properties_privateEndpoint_id, '`/')[-1]
 | extend name2 = split(id2, '`/')
 | extend connectionName = name2[-1]
 | project name, connectionName, state, peName
 "@
 
-$connectionNamesAutoApproved = [System.Collections.SortedList]::new()
-$connectionNamesManual = [System.Collections.SortedList]::new()
+$connectionNamesApproved = [System.Collections.SortedList]::new()
+$connectionNamesPending = [System.Collections.SortedList]::new()
+$connectionNamesPendingLookup = [System.Collections.Generic.SortedSet[string]]::new()
 
 foreach ($privateEndpoint in $privateEndpoints) {
 
@@ -32,13 +33,17 @@ foreach ($privateEndpoint in $privateEndpoints) {
     $First, $Rest = $privateEndpoint.peName -Replace '[^0-9A-Z.]', ' ' -Split ' ', 2
     $nameLowerCamelCase = $First.Tolower() + (Get-Culture).TextInfo.ToTitleCase($Rest) -Replace ' ' -Replace '\.', '_'
 
-    if ($privateEndpoint.state -eq "Auto-Approved") {
-        $connectionNamesAutoApproved.Add($nameLowerCamelCase, $privateEndpoint.connectionName )
+    if ($privateEndpoint.state -eq "Approved") {
+        $connectionNamesApproved.Add($nameLowerCamelCase, $privateEndpoint.connectionName )
     }
     else {
-        $connectionNamesManual.Add($nameLowerCamelCase, $privateEndpoint.connectionName )
+        $connectionNamesPending.Add($nameLowerCamelCase, $privateEndpoint.connectionName )
+        $connectionNamesPendingLookup.Add($privateEndpoint.connectionName) | Out-Null
     }
 }
 
-$connectionNamesAutoApproved    | ConvertTo-Json | Out-File "./lib/private/variables/generated/peConnectionsAutoAppr.json"
-$connectionNamesManual          | ConvertTo-Json | Out-File "./lib/private/variables/generated/peConnectionsManual.json"
+$connectionNamesApproved    | ConvertTo-Json | Out-File "./lib/private/variables/generated/peConApproved.json"
+$connectionNamesPending     | ConvertTo-Json | Out-File "./lib/private/variables/generated/peConPending.json"
+
+# Don't use a pipeline operator or else it does not handle empty arrays nicely
+ConvertTo-Json -InputObject $connectionNamesPendingLookup | Out-File "./lib/private/variables/generated/peConPendingLookup.json"
