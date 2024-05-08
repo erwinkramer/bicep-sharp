@@ -35,11 +35,21 @@ param groupIds array = [
   sharpNetwork.groupIds.azureStorageQueueService
 ]
 
+param privateEndpointConnectionApprovalNames array = [
+  sharpNetwork.privateEndpointConnectionNames.synGuanchen_MpeMountainArchive
+]
+
 @description('Id of the subnet to attach the private endpoints to')
 param subnetId string
 
 var sharpPrivateEndpoints = [
   for groupId in groupIds: sharpNetwork.buildPrivateEndpoint(sa.name, sa.id, groupId, subnetId)
+]
+var sharpPrivateEndpointConnectionApprovals = [
+  for privateEndpointConnectionApprovalName in privateEndpointConnectionApprovalNames: sharpNetwork.buildBuildPrivateEndpointConnectionApproval(
+    privateEndpointConnectionApprovalName,
+    'For yellowTeam@guanchen.nl'
+  )
 ]
 var sharpRoleAssignments = [
   for roleId in roleIds: sharpAuth.buildRoleAssignmentForServicePrincipal(roleId, principalId, sa.name)
@@ -75,19 +85,17 @@ resource sa 'Microsoft.Storage/storageAccounts@2023-01-01' = {
   }
 }
 
-resource diagMetricSa 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' =
-  if (!empty(workspaceId)) {
-    name: sharpStorageDiagnosticsMetrics.name
-    properties: sharpStorageDiagnosticsMetrics.properties
-    scope: sa
-  }
+resource diagMetricSa 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = if (!empty(workspaceId)) {
+  name: sharpStorageDiagnosticsMetrics.name
+  properties: sharpStorageDiagnosticsMetrics.properties
+  scope: sa
+}
 
-resource diagLogBlob 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' =
-  if (!empty(workspaceId)) {
-    name: sharpStorageBlobDiagnosticsLogs.name
-    properties: sharpStorageBlobDiagnosticsLogs.properties
-    scope: sa::blobServices
-  }
+resource diagLogBlob 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = if (!empty(workspaceId)) {
+  name: sharpStorageBlobDiagnosticsLogs.name
+  properties: sharpStorageBlobDiagnosticsLogs.properties
+  scope: sa::blobServices
+}
 
 resource roleAssignmentsForGroup 'Microsoft.Authorization/roleAssignments@2022-04-01' = [
   for sharpRoleAssignment in sharpRoleAssignments: {
@@ -103,6 +111,14 @@ resource privateEndpoints 'Microsoft.Network/privateEndpoints@2023-09-01' = [
     properties: sharpPrivateEndpoint.properties
     location: sharpResouce.getPrimaryLocation()
     tags: tags
+  }
+]
+
+resource privateEndpointConnectionApprovals 'Microsoft.Storage/storageAccounts/privateEndpointConnections@2023-04-01' = [
+  for sharpPrivateEndpointConnectionApproval in sharpPrivateEndpointConnectionApprovals: {
+    parent: sa
+    name: sharpPrivateEndpointConnectionApproval.name
+    properties: sharpPrivateEndpointConnectionApproval.properties
   }
 ]
 

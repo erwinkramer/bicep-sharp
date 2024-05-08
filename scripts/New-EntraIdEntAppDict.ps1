@@ -15,8 +15,9 @@ $builtInEnterpriseAppsForBicepSharp = [System.Collections.SortedList]::new()
 
 foreach ($enterpriseApp in $enterpriseApps) {
 
+    $appName = $enterpriseApp.AppDisplayName ? $enterpriseApp.AppDisplayName : $enterpriseApp.DisplayName
     # Make the name lower camel case
-    $First, $Rest = $enterpriseApp.AppDisplayName -Replace '[^0-9A-Z]', ' ' -Split ' ', 2
+    $First, $Rest = $appName -Replace '[^0-9A-Z]', ' ' -Split ' ', 2
     $nameLowerCamelCase = $First.Tolower() + (Get-Culture).TextInfo.ToTitleCase($Rest) -Replace ' '
 
     # Append to dictionary

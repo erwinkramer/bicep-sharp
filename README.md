@@ -9,7 +9,7 @@ Bicep# (pronounced Bicep sharp) is a functional framework designed to streamline
 
 Bicep# provides the following advantages:
 
-1. **Customized environment variables:** Bicep# automatically generates variables tailored to your policies, environment resources, and the latest Azure changes. This includes tenant-specific roles, enterprise apps, service tags, and global settings, ensuring up-to-date and easy to use information.
+1. **Customized environment variables:** Bicep# automatically generates variables tailored to your policies, environment resources, and the latest Azure changes. This includes tenant-specific roles, enterprise apps, service tags, global settings and more, ensuring up-to-date and easy to use information.
 
 2. **Rethinks the module pattern:** Module oriented libraries like [Azure Verified Modules](https://azure.github.io/Azure-Verified-Modules/) aim to modularize each resource. With Bicep#, the approach is to:
 
@@ -50,7 +50,7 @@ This project is currently in preview and only has the most basic functionality. 
 
 Compiled files are outputted to [/lib/private/variables/generated/](/lib/private/variables/generated/).
 
-To compile, make sure to install [PowerShell Az](https://www.powershellgallery.com/packages/Az) (11.5.0 or higher), then run with:
+To compile, make sure to install [PowerShell Az](https://www.powershellgallery.com/packages/Az) (11.5.0 or higher) and [Az.ResourceGraph](https://www.powershellgallery.com/packages/Az.ResourceGraph) (0.13.1 or higher), then run with:
 
 - param `location`, a location (a valid Azure region), for instance `westeurope`;
 - param `allowPublicResources`, either `0` or `1`. Sets the public network access property on resources.

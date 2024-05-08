@@ -60,6 +60,14 @@ You can choose a predefined service, like RDP or SSH, or provide a custom port r
 @export()
 var nsgRuleDestinationServices = _networkVar.nsgRuleDestinationServices
 
+@description('''
+Private Endpoint connection names from own and other tenants with either manual or auto-approval. Name pattern is:
+- `[private endpoint name]` for a private endpoint resource in own tenant.
+- `[resourceName]_[private endpoint name]` for other (managed) private endpoint connections.
+''')
+@export()
+var privateEndpointConnectionNames = _networkVar.privateEndpointConnectionNames
+
 /* ----------------------------------------
 
       😎 Bicep# - Public types 😎
@@ -169,6 +177,15 @@ Build a private endpoint.
 func buildPrivateEndpoint(targetResourceName string, targetResourceId string, groupId string, subnetId string) _resourceType.resourceFormat => {
   name: 'pe-${targetResourceName}-${groupId}'
   properties: _networkFunction.buildPrivateEndpointProperties(targetResourceName, targetResourceId, groupId, subnetId)
+}
+
+@description('''
+Build a private endpoint connection approval.
+''')
+@export()
+func buildBuildPrivateEndpointConnectionApproval(connectionName string, additionalInfo string) _resourceType.resourceFormat => {
+  name: connectionName
+  properties: _networkFunction.buildBuildPrivateEndpointConnectionApprovalProperties(connectionName, additionalInfo)
 }
 
 @description('''

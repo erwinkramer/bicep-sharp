@@ -250,3 +250,10 @@ var nsgRuleDestinationServices = {
   mongoDb: { portRange: '27017', protocol: 'TCP' }
   dynamicPorts: { portRange: '49152-65535', protocol: 'TCP' }
 }
+
+var privateEndpointConnectionNamesAutoApproved = loadJsonContent('./generated/peConnectionsAutoAppr.json')
+
+var privateEndpointConnectionNamesManual = loadJsonContent('./generated/peConnectionsManual.json')
+
+@export()
+var privateEndpointConnectionNames = union(privateEndpointConnectionNamesAutoApproved, privateEndpointConnectionNamesManual)

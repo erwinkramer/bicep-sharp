@@ -20,6 +20,7 @@ Write-Output "🤠 😎 💪 Bicep# compiler"
 $global:ErrorActionPreference = 'Stop'
 
 ./scripts/New-FrameworkGlobals -primaryLocation $location -allowPublicResources $allowPublicResources
+./scripts/New-PeConnectionDict
 ./scripts/New-RolesDict
 ./scripts/New-EntraIdEntAppDict
 ./scripts/New-ServiceTagDict -location $location
